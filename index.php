@@ -215,7 +215,57 @@ if (isset($_GET['delete'])) {
     </div>
 </div>
 </div>
+<!-- tabela 2 negativa -->
+<div class="card mb-4">
+    <div class="card-body">
+        <h2 class="card-title">Histórico de Despesas:</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $query = $conn->query('SELECT * FROM despesas ORDER BY id DESC');
+                    while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                        $descricao = $row['descricao'];
+                        $valor = $row['valor'];
+                        echo "<tr>";
+                        echo "<td>$descricao</td>";
+                        echo "<td>R$ $valor</td>";
+                        echo "<td><a href='editar.php?id=" . $row['id'] . "' class='btn btn-primary'>Editar</a> <a href='excluir.php?id=" . $row['id'] . "' class='btn btn-danger' onclick='return confirm(\"Deseja realmente excluir essa despesa?\")'>Excluir</a></td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Adicionar Despesa</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="descricao">Descrição:</label>
+                <input type="text" class="form-control" id="descricao" name="descricao" required>
+            </div>
+            <div class="form-group">
+                <label for="valor">Valor:</label>
+                <input type="number" class="form-control" id="valor" name="valor" step="0.01" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Adicionar</button>
+        </form>
+    </div>
+</div>
+</div>
+
+<!--  -->
 <br>
     <footer class="footer text-center">
     <p> &copy; 2023 Software De Finanças - Desenvolvido por 🤍<a href="mailto:diegorodriguesdantas02@gmail.com">Diego Dantas</a></p>

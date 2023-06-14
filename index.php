@@ -27,9 +27,9 @@ function getTotalGastos()
 // Função para obter o restante do salário
 function getRestanteSalario()
 {
-    $salario = 5000; // Defina o valor do salário mensal aqui
+    $saldo = getSaldo();
     $totalGastos = getTotalGastos();
-    $restante = $salario - $totalGastos;
+    $restante = $saldo - $totalGastos;
 
     return $restante;
 }
@@ -62,6 +62,7 @@ if (isset($_GET['delete'])) {
     exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">

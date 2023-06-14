@@ -1,3 +1,4 @@
+/* Estilos Gerais */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -172,17 +173,9 @@ footer {
 }
 
 /* Estilos Adicionais */
-body {
-    padding-top: 60px;
-}
-
 .logo {
     width: 40px;
     height: 40px;
-}
-
-.container {
-    margin-bottom: 40px;
 }
 
 .card {
@@ -237,7 +230,49 @@ body {
     border-color: #28a745;
 }
 
-footer {
-    background-color: #f8f9fa;
-    padding: 10px 0;
+.saldo-card {
+    background-color: #F3F3F3;
+    border-color: #F3F3F3;
+}
+
+.gastos-card {
+    background-color: #F9F9F9;
+    border-color: #F9F9F9;
+}
+
+.restante-card {
+    background-color: #FCFCFC;
+    border-color: #FCFCFC;
+}
+
+.footer {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+.limpar-button {
+    margin-top: 20px;
+}
+.footer {
+    background-color: black;
+    color: white;
+    padding: 10px;
+}
+
+.footer a {
+    color: green;
+}
+.saldo-card {
+    background-color: #008000;
+    color: white;
+}
+
+.gastos-card {
+    background-color: #FF0000;
+    color: white;
+}
+
+.restante-card {
+    background-color: #FFA500;
+    color: black;
 }

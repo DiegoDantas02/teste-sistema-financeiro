@@ -64,13 +64,39 @@ if (isset($_GET['delete'])) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Controle de Finanças</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        .saldo-card {
+            background-color: #008000;
+            color: white;
+        }
+
+        .gastos-card {
+            background-color: #FF0000;
+            color: white;
+        }
+
+        .restante-card {
+            background-color: #FFA500;
+            color: black;
+        }
+
+        .footer {
+            background-color: black;
+            color: white;
+            padding: 10px;
+        }
+
+        .footer a {
+            color: green;
+        }
+    </style>
 </head>
 
 <body>
@@ -84,13 +110,13 @@ if (isset($_GET['delete'])) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Início</a>
+                        <a class="nav-link" href="index.php">Início</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Transações</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Relatórios</a>
+                        <a class="nav-link" href="#"></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Configurações</a>
@@ -99,13 +125,13 @@ if (isset($_GET['delete'])) {
             </div>
         </nav>
     </header>
-
+<br>
     <div class="container">
         <h1 class="text-center">Sistema de Controle de Finanças</h1>
-
+<br>
         <div class="row">
             <div class="col-md-4">
-                <div class="card mb-4 text-center">
+                <div class="card mb-4 text-center saldo-card">
                     <div class="card-body">
                         <h2 class="card-title">Saldo</h2>
                         <p class="card-text">Saldo Total: R$ <?php echo number_format(getSaldo(), 2, ',', '.'); ?></p>
@@ -114,7 +140,7 @@ if (isset($_GET['delete'])) {
             </div>
 
             <div class="col-md-4">
-                <div class="card mb-4 text-center">
+                <div class="card mb-4 text-center gastos-card">
                     <div class="card-body">
                         <h2 class="card-title">Total de Gastos</h2>
                         <p class="card-text">R$ <?php echo number_format(getTotalGastos(), 2, ',', '.'); ?></p>
@@ -123,7 +149,7 @@ if (isset($_GET['delete'])) {
             </div>
 
             <div class="col-md-4">
-                <div class="card mb-4 text-center">
+                <div class="card mb-4 text-center restante-card">
                     <div class="card-body">
                         <h2 class="card-title">Restante do Salário</h2>
                         <p class="card-text">R$ <?php echo number_format(getRestanteSalario(), 2, ',', '.'); ?></p>
@@ -154,7 +180,7 @@ if (isset($_GET['delete'])) {
                             echo "<tr>";
                             echo "<td>$descricao</td>";
                             echo "<td>$sinal R$ $valorFormatado</td>";
-                            echo "<td><a href='editar.php?id=" . $row['id'] . "' class='btn btn-primary'>Editar</a> <a href='excluir.php?id=" . $row['id'] . "' class='btn btn-danger'>Excluir</a></td>";
+                            echo "<td><a href='editar.php?id=" . $row['id'] . "' class='btn btn-primary'>Editar</a> <a href='excluir.php?id=" . $row['id'] . "' class='btn btn-danger' onclick='return confirm(\"Deseja realmente excluir essa transação?\")'>Excluir</a></td>";
                             echo "</tr>";
                         }
                         ?>
@@ -163,36 +189,39 @@ if (isset($_GET['delete'])) {
             </div>
         </div>
 
-        <div class="card mb-4">
+        <div class="card">
             <div class="card-body">
-                <h2 class="card-title">Adicionar Transação:</h2>
-                <form method="POST" class="text-center">
+                <h2 class="card-title">Adicionar Transação</h2>
+                <form method="POST">
                     <div class="form-group">
-                        <select name="tipo" class="form-control">
+                        <label for="tipo">Tipo:</label>
+                        <select class="form-control" id="tipo" name="tipo">
                             <option value="receita">Receita</option>
                             <option value="despesa">Despesa</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="descricao" class="form-control" placeholder="Descrição" required>
+                        <label for="descricao">Descrição:</label>
+                        <input type="text" class="form-control" id="descricao" name="descricao" required>
                     </div>
                     <div class="form-group">
-                        <input type="number" name="valor" class="form-control" step="0.01" placeholder="Valor" required>
+                        <label for="valor">Valor:</label>
+                        <input type="number" class="form-control" id="valor" name="valor" step="0.01" required>
                     </div>
-                    <button type="submit" class="btn btn-success">Adicionar</button>
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
                 </form>
             </div>
         </div>
     </div>
+<br>
+    <footer class="footer text-center">
+    <p> &copy; 2023 Software De Finanças - Desenvolvido por 🤍<a href="mailto:diegorodriguesdantas02@gmail.com">Diego Dantas</a></p>
+</footer>
 
-    <footer class="text-center">
-        <p>&copy; <?php echo date("Y"); ?> Sistema de Controle de Finanças</p>
-    </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
 </body>
 
 </html>

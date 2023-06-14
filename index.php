@@ -62,7 +62,7 @@ if (isset($_GET['delete'])) {
     exit;
 }
 ?>
-
+<!-- ------------------------ -->
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -70,35 +70,12 @@ if (isset($_GET['delete'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Sistema de Controle de Finanças</title>
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .saldo-card {
-            background-color: #008000;
-            color: white;
-        }
-
-        .gastos-card {
-            background-color: #FF0000;
-            color: white;
-        }
-
-        .restante-card {
-            background-color: #FFA500;
-            color: black;
-        }
-
-        .footer {
-            background-color: black;
-            color: white;
-            padding: 10px;
-        }
-
-        .footer a {
-            color: green;
-        }
-    </style>
-</head>
+    <link rel="stylesheet" href="style.css">
+    
 
 <body>
     <header>

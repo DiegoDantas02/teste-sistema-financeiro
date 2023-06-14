@@ -3,11 +3,12 @@
 $conn = new PDO('mysql:host=localhost;dbname=projeto_software', 'root', '');
 
 // Função para obter o saldo atual
+// Função para obter o saldo atual
 function getSaldo()
 {
     global $conn;
 
-    $query = $conn->query('SELECT SUM(valor) as saldo FROM transacoes');
+    $query = $conn->query('SELECT COALESCE(SUM(valor), 0) as saldo FROM transacoes');
     $row = $query->fetch(PDO::FETCH_ASSOC);
 
     return $row['saldo'];
@@ -18,7 +19,7 @@ function getTotalGastos()
 {
     global $conn;
 
-    $query = $conn->query('SELECT SUM(valor) as total_gastos FROM transacoes WHERE tipo = "despesa"');
+    $query = $conn->query('SELECT COALESCE(SUM(valor), 0) as total_gastos FROM transacoes WHERE tipo = "despesa"');
     $row = $query->fetch(PDO::FETCH_ASSOC);
 
     return $row['total_gastos'];
@@ -33,6 +34,7 @@ function getRestanteSalario()
 
     return $restante;
 }
+
 
 // Verificar se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -72,10 +74,10 @@ if (isset($_GET['delete'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Sistema de Controle de Finanças</title>
-    
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
-    
+</head>
 
 <body>
     <header>
@@ -86,7 +88,7 @@ if (isset($_GET['delete'])) {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav">
                     <li class="nav-item active">
                         <a class="nav-link" href="index.php">Início</a>
                     </li>
@@ -101,8 +103,12 @@ if (isset($_GET['delete'])) {
                     </li>
                 </ul>
             </div>
+            <div class="ml-auto">
+                <button class="btn btn-danger">Sair</button>
+            </div>
         </nav>
     </header>
+    <!-- cabeçalho -->
 <br>
     <div class="container">
         <h1 class="text-center">Sistema de Controle de Finanças</h1>
@@ -135,37 +141,43 @@ if (isset($_GET['delete'])) {
                 </div>
             </div>
         </div>
-
+        <!-- ------------- -->
         <div class="card mb-4">
-            <div class="card-body">
-                <h2 class="card-title">Histórico de Transações:</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Descrição</th>
-                            <th scope="col">Valor</th>
-                            <th scope="col">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $query = $conn->query('SELECT * FROM transacoes ORDER BY id DESC');
-                        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-                            $descricao = $row['descricao'];
-                            $valor = $row['valor'];
-                            $sinal = $valor >= 0 ? '+' : '-';
-                            $valorFormatado = number_format(abs($valor), 2, ',', '.');
-                            echo "<tr>";
-                            echo "<td>$descricao</td>";
-                            echo "<td>$sinal R$ $valorFormatado</td>";
-                            echo "<td><a href='editar.php?id=" . $row['id'] . "' class='btn btn-primary'>Editar</a> <a href='excluir.php?id=" . $row['id'] . "' class='btn btn-danger' onclick='return confirm(\"Deseja realmente excluir essa transação?\")'>Excluir</a></td>";
-                            echo "</tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+    <div class="card-body">
+        <h2 class="card-title">Histórico de Transações:</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $query = $conn->query('SELECT * FROM transacoes ORDER BY id DESC');
+                    while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                        $descricao = $row['descricao'];
+                        $valor = $row['valor'];
+                        $sinal = $valor >= 0 ? '+' : '-';
+                        $valorFormatado = number_format(abs($valor), 2, ',', '.');
+                        echo "<tr>";
+                        echo "<td>$descricao</td>";
+                        echo "<td>$sinal R$ $valorFormatado</td>";
+                        echo "<td><a href='editar.php?id=" . $row['id'] . "' class='btn btn-primary'>Editar</a> <a href='excluir.php?id=" . $row['id'] . "' class='btn btn-danger' onclick='return confirm(\"Deseja realmente excluir essa transação?\")'>Excluir</a></td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
+        <form method="POST" action="limpar.php">
+            <button type="submit" class="btn btn-danger">Limpar Tudo</button>
+        </form>
+    </div>
+</div>
+<!-- -------------- -->
 
         <div class="card">
             <div class="card-body">
@@ -175,7 +187,15 @@ if (isset($_GET['delete'])) {
                         <label for="tipo">Tipo:</label>
                         <select class="form-control" id="tipo" name="tipo">
                             <option value="receita">Receita</option>
+                            <option value="receita">Salario</option>
                             <option value="despesa">Despesa</option>
+                            <option value="despesa">Alimentação</option>
+                            <option value="despesa">Aluguel</option>
+                            <option value="receita">Investimentos</option>
+                            <option value="despesa">Combustivel</option>
+                            <option value="despesa">Manutenções</option>
+                            <option value="despesa">Eletronicos</option>
+                            <option value="despesa">Outros</option>
                         </select>
                     </div>
                     <div class="form-group">

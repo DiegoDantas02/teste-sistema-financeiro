@@ -76,13 +76,18 @@ if (isset($_GET['delete'])) {
     <title>Sistema de Controle de Finanças</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#"><img src="logo.png" alt="Logo" class="logo"></a>
+<!-- logo -->
+<a class="navbar-brand" href="index.php"><img src="logo.png" alt="Logo" class="logo "></a>
+
+<!--  -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -95,9 +100,7 @@ if (isset($_GET['delete'])) {
                     <li class="nav-item">
                         <a class="nav-link" href="#">Transações</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"></a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="#">Configurações</a>
                     </li>
@@ -177,40 +180,42 @@ if (isset($_GET['delete'])) {
         </form>
     </div>
 </div>
-<!-- -------------- -->
+<!-- ----------- -->
 
-        <div class="card">
-            <div class="card-body">
-                <h2 class="card-title">Adicionar Transação</h2>
-                <form method="POST">
-                    <div class="form-group">
-                        <label for="tipo">Tipo:</label>
-                        <select class="form-control" id="tipo" name="tipo">
-                            <option value="receita">Receita</option>
-                            <option value="receita">Salario</option>
-                            <option value="despesa">Despesa</option>
-                            <option value="despesa">Alimentação</option>
-                            <option value="despesa">Aluguel</option>
-                            <option value="receita">Investimentos</option>
-                            <option value="despesa">Combustivel</option>
-                            <option value="despesa">Manutenções</option>
-                            <option value="despesa">Eletronicos</option>
-                            <option value="despesa">Outros</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="descricao">Descrição:</label>
-                        <input type="text" class="form-control" id="descricao" name="descricao" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="valor">Valor:</label>
-                        <input type="number" class="form-control" id="valor" name="valor" step="0.01" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Adicionar</button>
-                </form>
+<!-- ----------- -->
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Adicionar Transação</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="tipo">Tipo:</label>
+                <select class="form-control" id="tipo" name="tipo">
+                    <option value="receita">Receita</option>
+                    <option value="receita">Salario</option>
+                    <option value="despesa">Despesa</option>
+                    <option value="despesa">Alimentação</option>
+                    <option value="despesa">Aluguel</option>
+                    <option value="receita">Investimentos</option>
+                    <option value="despesa">Combustivel</option>
+                    <option value="despesa">Manutenções</option>
+                    <option value="despesa">Eletronicos</option>
+                    <option value="despesa">Outros</option>
+                </select>
             </div>
-        </div>
+            <div class="form-group">
+                <label for="descricao">Descrição:</label>
+                <input type="text" class="form-control" id="descricao" name="descricao" required>
+            </div>
+            <div class="form-group">
+                <label for="valor">Valor:</label>
+                <input type="number" class="form-control" id="valor" name="valor" step="0.01" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Adicionar</button>
+        </form>
     </div>
+</div>
+</div>
+
 <br>
     <footer class="footer text-center">
     <p> &copy; 2023 Software De Finanças - Desenvolvido por 🤍<a href="mailto:diegorodriguesdantas02@gmail.com">Diego Dantas</a></p>
